@@ -14,10 +14,12 @@ Maze::Maze (int gridWidth, int gridHeight, int blockPixelSize, int padPixels)
 		m_gridWidth {gridWidth},
 		m_gridHeight {gridHeight},
 
-		m_running {false},
-
-		m_grid (std::vector<blockRow>(gridHeight, blockRow(gridWidth)))
+		m_running {false}
 {
+	
+	//prepare the grid with the default "perfect maze"
+	m_grid = std::vector<blockRow>(gridHeight - 1, blockRow(gridWidth));
+	m_grid.push_back(blockRow(gridWidth, block{.pointsTo = Maze::RIGHT}));
 
 
 

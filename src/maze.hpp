@@ -5,17 +5,14 @@
 
 #include <vector>
 
-
+//custom operator overload to make it easier to manipulate float points
 SDL_FPoint operator + (SDL_FPoint pt1, SDL_FPoint pt2);
 
+//custom overload to make it easier to set the color
+bool SDL_SetRenderDrawColorFloat (SDL_Renderer* renderer, SDL_FColor color);
 
-struct block
-{
 
-	bool rightOpen = true;
-	bool downOpen = true;
-
-};
+struct block;
 
 enum blockCorner
 {
@@ -35,6 +32,11 @@ class Maze
 		void render ();
 
 		void generateMaze ();
+
+		enum direction
+		{
+			UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3
+		};
 
 
 
@@ -63,6 +65,26 @@ class Maze
 
 		typedef std::vector<block> blockRow;
 		std::vector<blockRow> m_grid; 
+
+};
+
+
+struct block
+{
+
+	Maze::direction pointsTo = Maze::DOWN;
+
+};
+
+
+
+class Colors
+{
+
+	public:
+		static const SDL_FColor backgroundColor;
+		static const SDL_FColor borderColor;
+		static const SDL_FColor mazeColor;
 
 };
 

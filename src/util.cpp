@@ -13,6 +13,12 @@ SDL_FPoint operator + (SDL_FPoint pt1, SDL_FPoint pt2)
 }
 
 
+bool SDL_SetRenderDrawColorFloat (SDL_Renderer* renderer, SDL_FColor color)
+{
+	return SDL_SetRenderDrawColorFloat(renderer, color.r, color.g, color.b, color.a);
+}
+
+
 
 SDL_FPoint Maze::getBlockCornerPos (blockCorner corner, int blockX, int blockY)
 {

@@ -13,6 +13,8 @@ void Maze::run ()
 	m_running = true;
 
 
+	generateMaze();
+
 
 	while (m_running)
 	{
