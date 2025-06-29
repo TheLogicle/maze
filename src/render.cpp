@@ -13,6 +13,11 @@ void Maze::render ()
 	drawMazeGrid();
 	drawBorder();
 
+	m_grid.at(3).at(4).isSolution = true;
+	m_grid.at(3).at(4).pointsTo = RIGHT;
+
+	drawSolution();
+
 
 	SDL_RenderPresent(m_renderer);
 
@@ -29,7 +34,7 @@ void Maze::drawBorder ()
 	float borderWidth = borderRightX - borderLeftX;
 	float borderHeight = borderBottomY - borderTopY;
 
-	float thickness = 8;
+	const float thickness = 8;
 
 	SDL_FRect borderRects[]
 	{
@@ -85,7 +90,7 @@ void Maze::drawMazeGrid ()
 			SDL_FPoint bottomLeft = getBlockCornerPos(BOTTOM_LEFT, col, row);
 			SDL_FPoint topRight = getBlockCornerPos(TOP_RIGHT, col, row);
 
-			float thickness = 2;
+			const float thickness = 2;
 
 			SDL_FRect bottomEdge{.x = bottomLeft.x, .y = bottomLeft.y, .w = m_blockPixelSize + thickness, .h = thickness};
 			SDL_FRect rightEdge{.x = topRight.x, .y = topRight.y, .w = thickness, .h = m_blockPixelSize + thickness};
@@ -121,6 +126,91 @@ void Maze::drawMazeGrid ()
 
 }
 
+
+
+void Maze::drawSolution ()
+{
+
+	SDL_SetRenderDrawColorFloat(m_renderer, Colors::solutionColor);
+
+
+	for (int row = 0; row < m_gridHeight; ++row)
+	{
+
+		for (int col = 0; col < m_gridWidth; ++col)
+		{
+
+			block &curBlock = m_grid.at(row).at(col);
+
+			if (!curBlock.isSolution)
+			{
+				continue;
+			}
+
+
+			const float thicknessPercent = 0.2;
+
+			float padPixels = 0.5 * (1 - thicknessPercent) * m_blockPixelSize;
+			float innerSquarePixels = thicknessPercent * m_blockPixelSize;
+
+			SDL_FPoint blockTopLeft = Maze::getBlockCornerPos(TOP_LEFT, col, row);
+			SDL_FPoint blockBottomRight = Maze::getBlockCornerPos(BOTTOM_RIGHT, col, row);
+
+			SDL_FRect pathRect;
+
+			switch (curBlock.solutionDir)
+			{
+
+				case UP:
+					pathRect = SDL_FRect
+					{
+						.x = blockBottomRight.x - padPixels,
+						.y = blockBottomRight.y - padPixels,
+						.w = -innerSquarePixels,
+						.h = -2 * (innerSquarePixels + padPixels)
+					};
+					break;
+
+				case RIGHT:
+					pathRect = SDL_FRect
+					{
+						.x = blockTopLeft.x + padPixels,
+						.y = blockTopLeft.y + padPixels,
+						.w = 2 * (innerSquarePixels + padPixels),
+						.h = innerSquarePixels
+					};
+					break;
+
+				case DOWN:
+					pathRect = SDL_FRect
+					{
+						.x = blockTopLeft.x + padPixels,
+						.y = blockTopLeft.y + padPixels,
+						.w = innerSquarePixels,
+						.h = 2 * (innerSquarePixels + padPixels)
+					};
+					break;
+
+				case LEFT:
+					pathRect = SDL_FRect
+					{
+						.x = blockBottomRight.x - padPixels,
+						.y = blockBottomRight.y - padPixels,
+						.w = -2 * (innerSquarePixels + padPixels),
+						.h = -innerSquarePixels
+					};
+					break;
+
+			}
+
+
+			SDL_RenderFillRect(m_renderer, &pathRect);
+
+		}
+
+	}
+
+}
 
 
 

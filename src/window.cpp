@@ -18,7 +18,7 @@ Maze::Maze (int gridWidth, int gridHeight, int blockPixelSize, int padPixels)
 {
 	
 	//prepare the grid with the default "perfect maze"
-	m_grid = std::vector<blockRow>(gridHeight - 1, blockRow(gridWidth));
+	m_grid = std::vector<blockRow>(gridHeight - 1, blockRow(gridWidth, block{.pointsTo = Maze::DOWN}));
 	m_grid.push_back(blockRow(gridWidth, block{.pointsTo = Maze::RIGHT}));
 
 

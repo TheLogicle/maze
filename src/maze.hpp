@@ -46,6 +46,7 @@ class Maze
 	private:
 		void drawBorder ();
 		void drawMazeGrid ();
+		void drawSolution ();
 
 	
 	private:
@@ -74,6 +75,9 @@ struct block
 
 	Maze::direction pointsTo = Maze::DOWN;
 
+	bool isSolution = false;
+	Maze::direction solutionDir = Maze::DOWN;
+
 };
 
 
@@ -85,6 +89,7 @@ class Colors
 		static const SDL_FColor backgroundColor;
 		static const SDL_FColor borderColor;
 		static const SDL_FColor mazeColor;
+		static const SDL_FColor solutionColor;
 
 };
 
