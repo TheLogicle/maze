@@ -45,6 +45,7 @@ class Maze
 
 	private:
 		void calcNeighbors ();
+		void prepareGrid ();
 
 	//internal rendering functions
 	private:

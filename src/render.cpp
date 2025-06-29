@@ -14,9 +14,6 @@ void Maze::render ()
 	drawBorder();
 
 
-	//m_grid.at(3).at(4).isSolution = true;
-	//m_grid.at(3).at(4).solutionTo = RIGHT;
-
 	drawSolution();
 
 

@@ -1,3 +1,3 @@
 default:
 	@cd src; \
-		g++ -o ../maze *.cpp -lSDL3
+		g++ -O3 -o ../maze *.cpp -lSDL3

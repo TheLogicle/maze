@@ -1,7 +1,6 @@
 #include "maze.hpp"
 
 #include <SDL3/SDL.h>
-#include <iostream>
 
 
 Maze::Maze (int gridWidth, int gridHeight, int blockPixelSize, int padPixels)
@@ -16,23 +15,8 @@ Maze::Maze (int gridWidth, int gridHeight, int blockPixelSize, int padPixels)
 
 		m_running {false}
 {
-	
-	//prepare the grid with the default "perfect maze"
-	m_grid = std::vector<blockRow>(gridHeight - 1, blockRow(gridWidth, block{.pointsTo = Maze::DOWN}));
-	m_grid.push_back(blockRow(gridWidth, block{.pointsTo = Maze::RIGHT}));
 
-	for (int row = 0; row < gridHeight; ++row)
-	{
-		for (int col = 0; col < gridWidth; ++col)
-		{
-			block &curBlock = m_grid.at(row).at(col);
-
-			curBlock.row = row;
-			curBlock.col = col;
-		}
-	}
-
-
+	prepareGrid();
 
 	SDL_Init(SDL_INIT_VIDEO);
 
@@ -43,4 +27,24 @@ Maze::Maze (int gridWidth, int gridHeight, int blockPixelSize, int padPixels)
 }
 
 
+//prepare the grid with the default "perfect maze"
+void Maze::prepareGrid ()
+{
 
+	m_grid = std::vector<blockRow>(m_gridHeight - 1, blockRow(m_gridWidth, block{.pointsTo = Maze::DOWN}));
+	m_grid.push_back(blockRow(m_gridWidth, block{.pointsTo = Maze::RIGHT}));
+
+	for (int row = 0; row < m_gridHeight; ++row)
+	{
+		for (int col = 0; col < m_gridWidth; ++col)
+		{
+			block &curBlock = m_grid.at(row).at(col);
+
+			curBlock.row = row;
+			curBlock.col = col;
+		}
+	}
+
+
+
+}

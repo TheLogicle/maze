@@ -1,7 +1,6 @@
 #include "maze.hpp"
 
 #include <stdexcept>
-#include <iostream>
 
 void Maze::solveMaze ()
 {
@@ -19,19 +18,9 @@ void Maze::solveMaze ()
 	m_grid.at(endY).at(endX).solutionDist = 0;
 
 
-	int tempCount = 0;
-
 	bool searchComplete = false;
 	while (!searchComplete)
 	{
-
-		++tempCount;
-		if (tempCount >= 10000)
-		{
-			std::cout << "search infinite" << std::endl;
-			return;
-		}
-
 
 		for (int row = 0; row < m_gridHeight; ++row)
 		{
@@ -83,7 +72,6 @@ void Maze::solveMaze ()
 
 
 
-	tempCount = 0;
 
 	int headX = startX;
 	int headY = startY;
@@ -92,14 +80,6 @@ void Maze::solveMaze ()
 	while (!pathComplete)
 	{
 
-		++tempCount;
-		if (tempCount >= 10000)
-		{
-			std::cout << "path infinite" << std::endl;
-			return;
-		}
-
-
 		block &headBlock = m_grid.at(headY).at(headX);
 
 		for (int i = 0; i < headBlock.neighbors.size(); ++i)
@@ -107,8 +87,9 @@ void Maze::solveMaze ()
 
 			block* neighbor = headBlock.neighbors.at(i);
 
-			if (neighbor->solutionDist < headBlock.solutionDist)
+			if (neighbor->solutionDist != -1 && neighbor->solutionDist < headBlock.solutionDist)
 			{
+
 				headBlock.isSolution = true;
 
 				if (neighbor->row == headBlock.row + 1) headBlock.solutionTo = DOWN;
@@ -121,6 +102,7 @@ void Maze::solveMaze ()
 				headY = neighbor->row;
 
 			}
+
 
 
 			if (neighbor->solutionDist == 0)
