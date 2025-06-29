@@ -7,7 +7,7 @@ int main ()
 	const int gridHeight = 30;
 
 	// size of each block
-	const int blockPixelSize = 40;
+	const int blockPixelSize = 30;
 
 	// pixel padding around entire maze
 	const int padPixels = 30;
