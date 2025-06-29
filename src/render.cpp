@@ -65,8 +65,8 @@ void Maze::drawBorder ()
 
 void Maze::drawMazeGrid ()
 {
-	SDL_SetRenderDrawColorFloat(m_renderer, 0.5, 0.5, 1, 1);
 
+	SDL_SetRenderDrawColorFloat(m_renderer, 0.5, 0.5, 1, 1);
 
 	for (int row = 0; row < m_gridHeight; ++row)
 	{
@@ -75,6 +75,8 @@ void Maze::drawMazeGrid ()
 
 		for (int col = 0; col < m_gridWidth; ++col)
 		{
+
+			auto &curBlock = curRow.at(col);
 
 			SDL_FPoint cornerPts[]
 			{

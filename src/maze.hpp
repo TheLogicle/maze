@@ -32,8 +32,9 @@ class Maze
 		Maze (int gridWidth, int gridHeight, int blockPixelSize, int padPixels);
 
 		void run ();
-
 		void render ();
+
+		void generateMaze ();
 
 
 

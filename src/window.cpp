@@ -19,6 +19,8 @@ Maze::Maze (int gridWidth, int gridHeight, int blockPixelSize, int padPixels)
 		m_grid (std::vector<blockRow>(gridHeight, blockRow(gridWidth)))
 {
 
+
+
 	SDL_Init(SDL_INIT_VIDEO);
 
 	m_window = SDL_CreateWindow("Maze", m_winWidth, m_winHeight, 0);
