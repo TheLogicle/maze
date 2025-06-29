@@ -27,6 +27,15 @@ Maze::Maze (int gridWidth, int gridHeight, int blockPixelSize, int padPixels)
 }
 
 
+Maze::~Maze ()
+{
+
+	SDL_Quit();
+
+}
+
+
+
 // prepare the grid with the default "perfect maze"
 void Maze::prepareGrid ()
 {

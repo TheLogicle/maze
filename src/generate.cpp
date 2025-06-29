@@ -1,5 +1,6 @@
 #include "maze.hpp"
 
+#include <stdexcept>
 
 // origin shift algorithm
 void Maze::generateMaze ()
@@ -50,6 +51,9 @@ void Maze::generateMaze ()
 			case RIGHT:
 				++headX;
 				break;
+
+			default:
+				throw std::runtime_error("invalid block direction, thrown from Maze::generateMaze");
 		}
 
 

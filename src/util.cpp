@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-
+// custom operator overload to make it easier to manipulate float points
 SDL_FPoint operator + (SDL_FPoint pt1, SDL_FPoint pt2)
 {
 	return SDL_FPoint
@@ -13,6 +13,7 @@ SDL_FPoint operator + (SDL_FPoint pt1, SDL_FPoint pt2)
 }
 
 
+// custom overload to make it easier to set the rendering color
 bool SDL_SetRenderDrawColorFloat (SDL_Renderer* renderer, SDL_FColor color)
 {
 	return SDL_SetRenderDrawColorFloat(renderer, color.r, color.g, color.b, color.a);
@@ -20,6 +21,7 @@ bool SDL_SetRenderDrawColorFloat (SDL_Renderer* renderer, SDL_FColor color)
 
 
 
+// get the pixel position of a corner of a block
 SDL_FPoint Maze::getBlockCornerPos (blockCorner corner, int blockX, int blockY)
 {
 
@@ -46,7 +48,7 @@ SDL_FPoint Maze::getBlockCornerPos (blockCorner corner, int blockX, int blockY)
 			return topLeft + SDL_FPoint{.x = (float) m_blockPixelSize, .y = (float) m_blockPixelSize};
 
 		default:
-			throw std::runtime_error("invalid enum option in Maze::getblockCornerPos");
+			throw std::runtime_error("invalid enum option, thrown from Maze::getBlockCornerPos");
 
 	};
 

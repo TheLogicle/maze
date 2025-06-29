@@ -112,7 +112,7 @@ void Maze::solveMaze ()
 				else if (neighbor->row == headBlock.row - 1) headBlock.solutionTo = UP;
 				else if (neighbor->col == headBlock.col + 1) headBlock.solutionTo = RIGHT;
 				else if (neighbor->col == headBlock.col - 1) headBlock.solutionTo = LEFT;
-				else throw std::runtime_error("invalid neighbor");
+				else throw std::runtime_error("invalid block neighbor, thrown from Maze::solveMaze");
 
 				headX = neighbor->col;
 				headY = neighbor->row;
@@ -176,6 +176,9 @@ void Maze::calcNeighbors ()
 					other = &m_grid.at(row).at(col - 1);
 					other->neighbors.push_back(&curBlock);
 					break;
+
+				default:
+					throw std::runtime_error("invalid block direction, thrown from Maze::calcNeighbors");
 
 			}
 

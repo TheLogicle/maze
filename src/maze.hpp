@@ -8,7 +8,7 @@
 // custom operator overload to make it easier to manipulate float points
 SDL_FPoint operator + (SDL_FPoint pt1, SDL_FPoint pt2);
 
-// custom overload to make it easier to set the color
+// custom overload to make it easier to set the rendering color
 bool SDL_SetRenderDrawColorFloat (SDL_Renderer* renderer, SDL_FColor color);
 
 
@@ -27,6 +27,7 @@ class Maze
 {
 	public:
 		Maze (int gridWidth, int gridHeight, int blockPixelSize, int padPixels);
+		~Maze ();
 
 		void run ();
 		void render (); // automatically called in a loop by the run() function
@@ -39,7 +40,7 @@ class Maze
 			UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3
 		};
 
-
+		// get the pixel position of a corner of a block
 		SDL_FPoint getBlockCornerPos (blockCorner corner, int blockX, int blockY);
 
 

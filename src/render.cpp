@@ -2,6 +2,8 @@
 
 #include <SDL3/SDL.h>
 
+#include <stdexcept>
+
 
 // main render function. this is where all partial rendering functions should be called from
 void Maze::render ()
@@ -212,6 +214,9 @@ void Maze::drawSolution ()
 						.h = -innerSquarePixels
 					};
 					break;
+
+				default:
+					throw std::runtime_error("invalid solution direction, thrown from Maze::drawSolution");
 
 			}
 
