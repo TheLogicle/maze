@@ -3,6 +3,7 @@
 #include <SDL3/SDL.h>
 
 
+// main render function. this is where all partial rendering functions should be called from
 void Maze::render ()
 {
 
@@ -32,8 +33,10 @@ void Maze::drawBorder ()
 	float borderWidth = borderRightX - borderLeftX;
 	float borderHeight = borderBottomY - borderTopY;
 
+	// pixel thickness of the border
 	const float thickness = 8;
 
+	// these are rectangles that, when all drawn, will create the border
 	SDL_FRect borderRects[]
 	{
 		{
@@ -70,6 +73,7 @@ void Maze::drawBorder ()
 }
 
 
+// draw the actual maze
 void Maze::drawMazeGrid ()
 {
 
@@ -78,7 +82,7 @@ void Maze::drawMazeGrid ()
 	for (int row = 0; row < m_gridHeight; ++row)
 	{
 
-		auto &curRow = m_grid.at(row);
+		blockRow &curRow = m_grid.at(row);
 
 		for (int col = 0; col < m_gridWidth; ++col)
 		{
@@ -88,8 +92,10 @@ void Maze::drawMazeGrid ()
 			SDL_FPoint bottomLeft = getBlockCornerPos(BOTTOM_LEFT, col, row);
 			SDL_FPoint topRight = getBlockCornerPos(TOP_RIGHT, col, row);
 
+			// pixel thickness of maze walls
 			const float thickness = 2;
 
+			// the actual edges of each block to be drawn
 			SDL_FRect bottomEdge{.x = bottomLeft.x, .y = bottomLeft.y, .w = m_blockPixelSize + thickness, .h = thickness};
 			SDL_FRect rightEdge{.x = topRight.x, .y = topRight.y, .w = thickness, .h = m_blockPixelSize + thickness};
 
@@ -99,14 +105,16 @@ void Maze::drawMazeGrid ()
 
 
 
-			//check that there is no pointer between current block and right block
+			// check that there is no pointer between current block and right block
+			// if there is no pathway, draw the wall
 			if (curBlock.pointsTo != RIGHT &&
 					!onRightEdge && m_grid.at(row).at(col + 1).pointsTo != LEFT)
 			{
 				SDL_RenderFillRect(m_renderer, &rightEdge);
 			}
 
-			//check that there is no pointer between current block and below block
+			// check that there is no pointer between current block and below block
+			// if there is no pathway, draw the wall
 			if (curBlock.pointsTo != DOWN &&
 					!onBottomEdge && m_grid.at(row + 1).at(col).pointsTo != UP)
 			{
@@ -125,7 +133,7 @@ void Maze::drawMazeGrid ()
 }
 
 
-
+// once the solution is calculated (elsewhere), this function will render it
 void Maze::drawSolution ()
 {
 
@@ -140,22 +148,28 @@ void Maze::drawSolution ()
 
 			block &curBlock = m_grid.at(row).at(col);
 
+			// skip this block if it is not part of the solution path
 			if (!curBlock.isSolution)
 			{
 				continue;
 			}
 
 
+			// thickness of the drawn solution path, as a percentage of the block width
 			const float thicknessPercent = 0.2;
 
+			// pixel padding between the edge of the block and the edge of the solution path
 			float padPixels = 0.5 * (1 - thicknessPercent) * m_blockPixelSize;
+			// actual pixel thickness of the solution path
 			float innerSquarePixels = thicknessPercent * m_blockPixelSize;
 
+			// pixel coordinates of the top left and bottom right of the current block
 			SDL_FPoint blockTopLeft = Maze::getBlockCornerPos(TOP_LEFT, col, row);
 			SDL_FPoint blockBottomRight = Maze::getBlockCornerPos(BOTTOM_RIGHT, col, row);
 
 			SDL_FRect pathRect;
 
+			// prepare the rectangle that needs to be drawn for this block
 			switch (curBlock.solutionTo)
 			{
 

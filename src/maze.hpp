@@ -5,10 +5,10 @@
 
 #include <vector>
 
-//custom operator overload to make it easier to manipulate float points
+// custom operator overload to make it easier to manipulate float points
 SDL_FPoint operator + (SDL_FPoint pt1, SDL_FPoint pt2);
 
-//custom overload to make it easier to set the color
+// custom overload to make it easier to set the color
 bool SDL_SetRenderDrawColorFloat (SDL_Renderer* renderer, SDL_FColor color);
 
 
@@ -29,7 +29,7 @@ class Maze
 		Maze (int gridWidth, int gridHeight, int blockPixelSize, int padPixels);
 
 		void run ();
-		void render ();
+		void render (); // automatically called in a loop by the run() function
 
 		void generateMaze ();
 		void solveMaze ();
@@ -43,17 +43,18 @@ class Maze
 		SDL_FPoint getBlockCornerPos (blockCorner corner, int blockX, int blockY);
 
 
-	private:
-		void calcNeighbors ();
-		void prepareGrid ();
-
-	//internal rendering functions
+	// internal rendering functions
 	private:
 		void drawBorder ();
 		void drawMazeGrid ();
 		void drawSolution ();
 
-	
+
+	// other internal functions
+	private:
+		void calcNeighbors ();
+		void prepareGrid ();
+
 	private:
 		SDL_Window* m_window;
 		SDL_Renderer* m_renderer;
@@ -75,6 +76,7 @@ class Maze
 };
 
 
+// the maze consists of a grid of these
 struct block
 {
 

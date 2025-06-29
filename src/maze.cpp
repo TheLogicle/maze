@@ -27,7 +27,7 @@ Maze::Maze (int gridWidth, int gridHeight, int blockPixelSize, int padPixels)
 }
 
 
-//prepare the grid with the default "perfect maze"
+// prepare the grid with the default "perfect maze"
 void Maze::prepareGrid ()
 {
 

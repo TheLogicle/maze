@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 
+// once the maze is generated, this algorithm will solve it
+// not fully optimized, but it's such a light load that it doesn't matter
 void Maze::solveMaze ()
 {
 
@@ -12,12 +14,16 @@ void Maze::solveMaze ()
 	const int endY = m_gridHeight - 1;
 
 
+	// calculate each block's neighbors (a.k.a. adjacent blocks without a wall in between)
 	calcNeighbors();
 
 
+	// set the seed at the end block, so the algorithm can "grow" from there until it reaches the start block
 	m_grid.at(endY).at(endX).solutionDist = 0;
 
 
+	// --- search phase
+	// records path distance of each block from the end block
 	bool searchComplete = false;
 	while (!searchComplete)
 	{
@@ -31,9 +37,12 @@ void Maze::solveMaze ()
 
 				block &curBlock = m_grid.at(row).at(col);
 
+				// skip if the block already has a recorded distance
 				if (curBlock.solutionDist != -1) continue;
 
 
+				// the neighbor with the least recorded distance will be stored here
+				// the total number of blocks is an impossible distance, so I set that as the initial value
 				int leastNeighboringDist = m_gridHeight * m_gridWidth;
 
 				for (int i = 0; i < curBlock.neighbors.size(); ++i)
@@ -48,11 +57,14 @@ void Maze::solveMaze ()
 
 				}
 
+				// if there was a neighbor with a recorded distance, record self's distance as one more than that
 				if (leastNeighboringDist < m_gridHeight * m_gridWidth)
 				{
 
 					curBlock.solutionDist = leastNeighboringDist + 1;
 
+					// search is complete once it reaches the start block
+					// this means that a full path can now be calculated
 					if (col == startX && row == startY)
 					{
 						searchComplete = true;
@@ -73,6 +85,9 @@ void Maze::solveMaze ()
 
 
 
+	// --- path phase
+	// use the recorded distances to calculate a path from start to end
+
 	int headX = startX;
 	int headY = startY;
 
@@ -87,6 +102,7 @@ void Maze::solveMaze ()
 
 			block* neighbor = headBlock.neighbors.at(i);
 
+			// if there is a neighbor that has a lower distance than the head, direct the path to that neighbor
 			if (neighbor->solutionDist != -1 && neighbor->solutionDist < headBlock.solutionDist)
 			{
 
@@ -105,6 +121,7 @@ void Maze::solveMaze ()
 
 
 
+			// once the head reaches the end block, the full solution path is complete
 			if (neighbor->solutionDist == 0)
 			{
 				pathComplete = true;
@@ -121,6 +138,7 @@ void Maze::solveMaze ()
 
 
 
+// calculate each block's neighbors (a.k.a. adjacent blocks without a wall in between)
 void Maze::calcNeighbors ()
 {
 
@@ -134,7 +152,8 @@ void Maze::calcNeighbors ()
 
 			block* other;
 
-			//no need to check for blocks pointing out of the border, because that is impossible
+			// check which block that the current one points to, and add both to each other's neighbor list
+			// no need to check for blocks pointing out of the border, because that is impossible
 			switch (curBlock.pointsTo)
 			{
 
