@@ -2,7 +2,9 @@
 
 This is a simple C++/SDL3 program which generates a perfect maze, then displays its solution.
 
-*NOTE: This program was developed on Linux, and it has not been tested on Windows or MacOS.*
+**_NOTE: This program was developed on Linux, and it has not been tested on Windows or MacOS._**
+
+This repo was rebased in June 2025, which reset the commit timestamps.
 
 ---
 
