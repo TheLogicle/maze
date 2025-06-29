@@ -32,6 +32,7 @@ class Maze
 		void render ();
 
 		void generateMaze ();
+		void solveMaze ();
 
 		enum direction
 		{
@@ -39,8 +40,11 @@ class Maze
 		};
 
 
-
 		SDL_FPoint getBlockCornerPos (blockCorner corner, int blockX, int blockY);
+
+
+	private:
+		void calcNeighbors ();
 
 	//internal rendering functions
 	private:
@@ -73,10 +77,16 @@ class Maze
 struct block
 {
 
+	int row, col;
+
 	Maze::direction pointsTo = Maze::DOWN;
 
+	std::vector<block*> neighbors;
+
 	bool isSolution = false;
-	Maze::direction solutionDir = Maze::DOWN;
+	Maze::direction solutionTo = Maze::DOWN;
+
+	int solutionDist = -1;
 
 };
 

@@ -21,6 +21,17 @@ Maze::Maze (int gridWidth, int gridHeight, int blockPixelSize, int padPixels)
 	m_grid = std::vector<blockRow>(gridHeight - 1, blockRow(gridWidth, block{.pointsTo = Maze::DOWN}));
 	m_grid.push_back(blockRow(gridWidth, block{.pointsTo = Maze::RIGHT}));
 
+	for (int row = 0; row < gridHeight; ++row)
+	{
+		for (int col = 0; col < gridWidth; ++col)
+		{
+			block &curBlock = m_grid.at(row).at(col);
+
+			curBlock.row = row;
+			curBlock.col = col;
+		}
+	}
+
 
 
 	SDL_Init(SDL_INIT_VIDEO);

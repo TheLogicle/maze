@@ -13,8 +13,9 @@ void Maze::render ()
 	drawMazeGrid();
 	drawBorder();
 
-	m_grid.at(3).at(4).isSolution = true;
-	m_grid.at(3).at(4).pointsTo = RIGHT;
+
+	//m_grid.at(3).at(4).isSolution = true;
+	//m_grid.at(3).at(4).solutionTo = RIGHT;
 
 	drawSolution();
 
@@ -158,7 +159,7 @@ void Maze::drawSolution ()
 
 			SDL_FRect pathRect;
 
-			switch (curBlock.solutionDir)
+			switch (curBlock.solutionTo)
 			{
 
 				case UP:

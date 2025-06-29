@@ -15,6 +15,8 @@ void Maze::run ()
 
 	generateMaze();
 
+	solveMaze();
+
 
 	while (m_running)
 	{
