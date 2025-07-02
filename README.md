@@ -22,6 +22,6 @@ This repo was rebased in June 2025, which reset the commit timestamps.
 
 ## Usage
 
-Run `maze` in the terminal, and a window should pop up with a maze and its solution.  
+Run `maze` in the terminal, and a window should pop up with a maze and its solution. *(If you only built the program without installing, the executable file is named `maze` in your local repository.)*  
 
 Press `a` to generate a new maze and solution.
